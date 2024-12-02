@@ -32,6 +32,8 @@ int main(int argc, char* argv[])
     int screenWidth = 800;
     int screenHeight = 450;
 
+    float circleSize = 5.0f;
+
     InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
 
     SetTargetFPS(60);
@@ -50,6 +52,10 @@ int main(int argc, char* argv[])
         BeginDrawing();
 
         ClearBackground(RAYWHITE);
+
+        DrawCircle(50, 50, circleSize, RED);
+
+        circleSize += .0225f;
 
         DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
 
