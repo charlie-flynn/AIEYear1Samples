@@ -25,6 +25,8 @@
 #define RAYGUI_SUPPORT_ICONS
 #include "raygui.h"
 
+
+
 int main(int argc, char* argv[])
 {
     // Initialization
@@ -32,7 +34,10 @@ int main(int argc, char* argv[])
     int screenWidth = 800;
     int screenHeight = 450;
 
-    float circleSize = 5.0f;
+    float playerSize = 15.0f;
+    Vector2 playerPosition = Vector2();
+    playerPosition.x = 2.0f;
+    playerPosition.y = 2.0f;
 
     InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
 
@@ -53,9 +58,10 @@ int main(int argc, char* argv[])
 
         ClearBackground(RAYWHITE);
 
-        DrawCircle(50, 50, circleSize, RED);
+        DrawCircleV(playerPosition, playerSize, GREEN);
 
-        circleSize += .0225f;
+        playerPosition.x += (IsKeyDown(KEY_RIGHT) - IsKeyDown(KEY_LEFT)) * 5;
+        playerPosition.y += (IsKeyDown(KEY_DOWN) - IsKeyDown(KEY_UP)) * 5;
 
         DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
 
@@ -67,6 +73,5 @@ int main(int argc, char* argv[])
     //--------------------------------------------------------------------------------------   
     CloseWindow();        // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
-
     return 0;
 }
