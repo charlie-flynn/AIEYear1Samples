@@ -13,6 +13,7 @@ DataFile::~DataFile()
 	Clear();
 }
 
+// adds the record to the list of records given
 void DataFile::AddRecord(string imageFilename, string name, int age)
 {
 	Image i = LoadImage(imageFilename.c_str());
@@ -26,21 +27,23 @@ void DataFile::AddRecord(string imageFilename, string name, int age)
 	recordCount++;
 }
 
+// returns the record at the given index
 DataFile::Record* DataFile::GetRecord(int index)
 {
 	return records[index];
 }
 
+// writes all of the files into the database
 void DataFile::Save(string filename)
 {
 	ofstream outfile(filename, ios::binary);
 
-	recordCount = records.size();
 	outfile.write((char*)&recordCount, sizeof(int));
 
-
+	// gets the records and then writes all of the information into the records file
 	for (int i = 0; i < recordCount; i++)
 	{		
+
 		Color* imgdata = GetImageData(records[i]->image);
 				
 		int imageSize = sizeof(Color) * records[i]->image.width * records[i]->image.height;
@@ -61,6 +64,7 @@ void DataFile::Save(string filename)
 	outfile.close();
 }
 
+// loads all of the files from the database
 void DataFile::Load(string filename)
 {
 	Clear();
@@ -76,6 +80,7 @@ void DataFile::Load(string filename)
 		int ageSize = 0;
 		int width = 0, height = 0, format = 0, imageSize = 0;
 
+		// reads the stuff from the file
 		infile.read((char*)&width, sizeof(int));
 		infile.read((char*)&height, sizeof(int));
 
@@ -94,8 +99,10 @@ void DataFile::Load(string filename)
 		infile.read((char*)name, nameSize);
 		infile.read((char*)&age, ageSize);
 
+		// appends the null terminator to the end of the name so that it doesn't read the unknowable secrets from the depths of the circuitry that permeates this world
 		name[nameSize] = *"\0";
 
+		// adds a record which is the one from the file that we're lookin at
 		Record* r = new Record();
 		r->image = img;
 		r->name = string(name);
@@ -109,6 +116,7 @@ void DataFile::Load(string filename)
 	infile.close();
 }
 
+// removes all the records from memory
 void DataFile::Clear()
 {
 	for (int i = 0; i < records.size(); i++)
