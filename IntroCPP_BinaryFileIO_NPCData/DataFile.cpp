@@ -1,4 +1,5 @@
 #include "DataFile.h"
+#include <iostream>
 #include <fstream>
 using namespace std;
 
@@ -34,8 +35,9 @@ void DataFile::Save(string filename)
 {
 	ofstream outfile(filename, ios::binary);
 
-	int recordCount = records.size();
+	recordCount = records.size();
 	outfile.write((char*)&recordCount, sizeof(int));
+
 
 	for (int i = 0; i < recordCount; i++)
 	{		
@@ -86,11 +88,13 @@ void DataFile::Load(string filename)
 		infile.read(imgdata, imageSize);
 
 		Image img = LoadImageEx((Color*)imgdata, width, height);
-		char* name = new char[nameSize];
+		char* name = new char[nameSize + 1];
 		int age = 0;
 				
 		infile.read((char*)name, nameSize);
 		infile.read((char*)&age, ageSize);
+
+		name[nameSize] = *"\0";
 
 		Record* r = new Record();
 		r->image = img;
@@ -101,7 +105,7 @@ void DataFile::Load(string filename)
 		delete [] imgdata;
 		delete [] name;
 	}
-
+	recordCount = records.size();
 	infile.close();
 }
 
