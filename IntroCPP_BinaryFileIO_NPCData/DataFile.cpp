@@ -2,6 +2,8 @@
 #include <iostream>
 #include <fstream>
 
+using namespace std;
+
 DataFile::DataFile()
 {
 	recordCount = 0;
@@ -11,16 +13,20 @@ DataFile::DataFile()
 DataFile::~DataFile()
 {
 	Clear();
+	delete currentRecord;
+	currentRecord = nullptr;
 }
 
 // adds the record to the list of records given
 void DataFile::AddRecord(string imageFilename, string name, int age)
 {
+	// opens the file named fileName
 	std::fstream writer;
 	writer.open(fileName, std::ios::binary | std::ios::app);
 
 	if (writer.is_open())
 	{
+		// loads all the record stuff and appends the record to the file
 		Image i = LoadImage(imageFilename.c_str());
 
 		Record* r = new Record;
@@ -41,15 +47,16 @@ DataFile::Record* DataFile::GetRecord(int index)
 	std::fstream findRecord;
 	Record* record = new Record();
 
-	findRecord.open(fileName, std::ios::out | std::ios::binary);
+	findRecord.open(fileName, ios::out | ios::binary | ios::app);
 
 	if (findRecord.is_open())
 	{
-		findRecord.seekg(sizeof(Record) * (index - 1), ios::beg);
+		findRecord.seekg(sizeof(Record) * (index), ios::beg);
 		findRecord.read((char*)record, sizeof(Record));
 	}
 	else 
 	{
+		findRecord.close();
 		return nullptr;
 	}
 
@@ -63,6 +70,7 @@ void DataFile::Save(string filename)
 {
 	ofstream outfile(filename, std::ios::binary);
 
+	// dont worry about this for now :thumbsup:
 	outfile.write((char*)&recordCount, sizeof(int));
 
 	// gets the records and then writes all of the information into the records file
@@ -94,13 +102,7 @@ void DataFile::Load(string filename)
 {
 	Clear();
 	fileName = filename;
-
-	ifstream infile(filename, ios::out | ios::in | ios::binary);
-	infile.seekg(0, ios::end);
-	recordCount = (int)infile.tellg() / sizeof(Record);
-
-	infile.read((char*)&recordCount, sizeof(int));
-
+	recordCount = 5;
 
 	/*
 	for (int i = 0; i < recordCount; i++)
@@ -141,7 +143,7 @@ void DataFile::Load(string filename)
 		delete [] name;
 	}
 	*/
-	infile.close();
+
 }
 
 // removes all the records from memory
