@@ -29,14 +29,14 @@ void DataFile::AddRecord(string imageFilename, string name, int age)
 		// loads all the record stuff and appends the record to the file
 		Image i = LoadImage(imageFilename.c_str());
 
-		Record* r = new Record;
-		r->image = i;
-		r->name = name;
-		r->age = age;
+		Record r = Record();
+		r.image = i;
+		r.name = name;
+		r.age = age;
 
 		recordCount++;
 
-		writer.write((char*)r, sizeof(Record));
+		writer.write((char*)&r, sizeof(Record));
 	}
 }
 
@@ -45,14 +45,14 @@ DataFile::Record* DataFile::GetRecord(int index)
 {
 	// read the indicated file
 	std::fstream findRecord;
-	Record* record = new Record();
+	Record record = Record();
 
-	findRecord.open(fileName, ios::out | ios::binary | ios::app);
+	findRecord.open("npc_data.dat", ios::binary | ios::in);
 
-	if (findRecord.is_open())
+	if (findRecord.is_open() && index < recordCount && index >= 0)
 	{
-		findRecord.seekg(sizeof(Record) * (index), ios::beg);
-		findRecord.read((char*)record, sizeof(Record));
+		findRecord.seekg((sizeof(Record) * index), ios::beg);
+		findRecord.read((char*)&record, sizeof(Record));
 	}
 	else 
 	{
@@ -61,37 +61,37 @@ DataFile::Record* DataFile::GetRecord(int index)
 	}
 
 	findRecord.close();
-
-	return record;
+	return &record;
 }
 
 // writes all of the files into the database
 void DataFile::Save(string filename)
 {
-	ofstream outfile(filename, std::ios::binary);
+	ofstream outfile(filename, std::ios::binary | ios::out);
 
-	// dont worry about this for now :thumbsup:
+
 	outfile.write((char*)&recordCount, sizeof(int));
 
 	// gets the records and then writes all of the information into the records file
 	for (int i = 0; i < recordCount; i++)
 	{		
+		Record record = *GetRecord(i);
 
-		Color* imgdata = GetImageData(currentRecord->image);
+		Color* imgdata = GetImageData(record.image);
 				
-		int imageSize = sizeof(Color) * currentRecord->image.width * currentRecord->image.height;
-		int nameSize = currentRecord->name.length();
+		int imageSize = sizeof(Color) * record.image.width * record.image.height;
+		int nameSize = record.name.length();
 		int ageSize = sizeof(int);
 
-		outfile.write((char*)&currentRecord->image.width, sizeof(int));
-		outfile.write((char*)&currentRecord->image.height, sizeof(int));
+		outfile.write((char*)&record.image.width, sizeof(int));
+		outfile.write((char*)&record.image.height, sizeof(int));
 		
 		outfile.write((char*)&nameSize, sizeof(int));
 		outfile.write((char*)&ageSize, sizeof(int));
 
 		outfile.write((char*)imgdata, imageSize);
-		outfile.write((char*)currentRecord->name.c_str(), nameSize);
-		outfile.write((char*)&currentRecord->age, ageSize);
+		outfile.write((char*)record.name.c_str(), nameSize);
+		outfile.write((char*)&record.age, ageSize);
 	}
 
 	outfile.close();
