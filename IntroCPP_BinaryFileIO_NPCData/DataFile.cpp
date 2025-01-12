@@ -1,11 +1,11 @@
 #include "DataFile.h"
 #include <iostream>
 #include <fstream>
+using namespace std;
 
 DataFile::DataFile()
 {
 	recordCount = 0;
-	currentRecord = nullptr;
 }
 
 DataFile::~DataFile()
@@ -16,52 +16,27 @@ DataFile::~DataFile()
 // adds the record to the list of records given
 void DataFile::AddRecord(string imageFilename, string name, int age)
 {
-	std::fstream writer;
-	writer.open(fileName, std::ios::binary | std::ios::app);
+	Image i = LoadImage(imageFilename.c_str());
 
-	if (writer.is_open())
-	{
-		Image i = LoadImage(imageFilename.c_str());
+	Record* r = new Record;
+	r->image = i;
+	r->name = name;
+	r->age = age;
 
-		Record* r = new Record;
-		r->image = i;
-		r->name = name;
-		r->age = age;
-
-		recordCount++;
-
-		writer.write((char*)r, sizeof(Record));
-	}
+	records.push_back(r);
+	recordCount++;
 }
 
 // returns the record at the given index
 DataFile::Record* DataFile::GetRecord(int index)
 {
-	// read the indicated file
-	std::fstream findRecord;
-	Record* record = new Record();
-
-	findRecord.open(fileName, std::ios::out | std::ios::binary);
-
-	if (findRecord.is_open())
-	{
-		findRecord.seekg(sizeof(Record) * (index - 1), ios::beg);
-		findRecord.read((char*)record, sizeof(Record));
-	}
-	else 
-	{
-		return nullptr;
-	}
-
-	findRecord.close();
-
-	return record;
+	return records[index];
 }
 
 // writes all of the files into the database
 void DataFile::Save(string filename)
 {
-	ofstream outfile(filename, std::ios::binary);
+	ofstream outfile(filename, ios::binary);
 
 	outfile.write((char*)&recordCount, sizeof(int));
 
@@ -69,21 +44,21 @@ void DataFile::Save(string filename)
 	for (int i = 0; i < recordCount; i++)
 	{		
 
-		Color* imgdata = GetImageData(currentRecord->image);
+		Color* imgdata = GetImageData(records[i]->image);
 				
-		int imageSize = sizeof(Color) * currentRecord->image.width * currentRecord->image.height;
-		int nameSize = currentRecord->name.length();
+		int imageSize = sizeof(Color) * records[i]->image.width * records[i]->image.height;
+		int nameSize = records[i]->name.length();
 		int ageSize = sizeof(int);
 
-		outfile.write((char*)&currentRecord->image.width, sizeof(int));
-		outfile.write((char*)&currentRecord->image.height, sizeof(int));
+		outfile.write((char*)&records[i]->image.width, sizeof(int));
+		outfile.write((char*)&records[i]->image.height, sizeof(int));
 		
 		outfile.write((char*)&nameSize, sizeof(int));
 		outfile.write((char*)&ageSize, sizeof(int));
 
 		outfile.write((char*)imgdata, imageSize);
-		outfile.write((char*)currentRecord->name.c_str(), nameSize);
-		outfile.write((char*)&currentRecord->age, ageSize);
+		outfile.write((char*)records[i]->name.c_str(), nameSize);
+		outfile.write((char*)&records[i]->age, ageSize);
 	}
 
 	outfile.close();
@@ -93,16 +68,12 @@ void DataFile::Save(string filename)
 void DataFile::Load(string filename)
 {
 	Clear();
-	fileName = filename;
 
-	ifstream infile(filename, ios::out | ios::in | ios::binary);
-	infile.seekg(0, ios::end);
-	recordCount = (int)infile.tellg() / sizeof(Record);
+	ifstream infile(filename, ios::binary);
 
+	recordCount = 0;
 	infile.read((char*)&recordCount, sizeof(int));
 
-
-	/*
 	for (int i = 0; i < recordCount; i++)
 	{		
 		int nameSize = 0;
@@ -136,17 +107,22 @@ void DataFile::Load(string filename)
 		r->image = img;
 		r->name = string(name);
 		r->age = age;
+		records.push_back(r);
 
 		delete [] imgdata;
 		delete [] name;
 	}
-	*/
+	recordCount = records.size();
 	infile.close();
 }
 
 // removes all the records from memory
 void DataFile::Clear()
 {
-	currentRecord = nullptr;
+	for (int i = 0; i < records.size(); i++)
+	{
+		delete records[i];
+	}
+	records.clear();
 	recordCount = 0;
 }

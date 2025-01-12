@@ -17,8 +17,7 @@ public:
 
 private:
 	int recordCount;
-	Record* currentRecord;
-	string fileName;
+	std::vector<Record*> records;	// delete this vector. Load only the required record 
 
 
 
