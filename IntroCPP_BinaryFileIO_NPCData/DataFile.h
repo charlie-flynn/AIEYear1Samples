@@ -23,7 +23,7 @@ private:
 
 public:
 	DataFile();
-	~DataFile();
+	~DataFile() = default;
 
 	void AddRecord(string imageFilename, string name, int age);
 	Record* GetRecord(int index);

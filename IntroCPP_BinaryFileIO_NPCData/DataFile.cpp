@@ -8,11 +8,6 @@ DataFile::DataFile()
 	recordCount = 0;
 }
 
-DataFile::~DataFile()
-{
-	Clear();
-}
-
 // adds the record to the list of records given
 void DataFile::AddRecord(string imageFilename, string name, int age)
 {
