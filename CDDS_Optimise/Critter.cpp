@@ -35,6 +35,11 @@ void Critter::Unload()
 	m_isLoaded = false;
 }
 
+void Critter::Destroy()
+{
+	UnloadTexture(m_texture);
+}
+
 void Critter::Update(float dt)
 {
 	if (m_isLoaded == false)
