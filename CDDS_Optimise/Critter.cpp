@@ -29,7 +29,7 @@ void Critter::Init(Vector2 position, Vector2 velocity, float radius, const char*
 	m_isLoaded = true;
 }
 
-void Critter::Destroy()
+void Critter::Unload()
 {
 	m_position = { 9999, 9999 };
 	m_isLoaded = false;

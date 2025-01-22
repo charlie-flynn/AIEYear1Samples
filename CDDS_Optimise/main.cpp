@@ -128,7 +128,7 @@ int main(int argc, char* argv[])
             float dist = Vector2Distance(critters[i].GetPosition(), destroyer.GetPosition());
             if (dist < critters[i].GetRadius() + destroyer.GetRadius())
             {
-                critters[i].Destroy();
+                critters[i].Unload();
                 // this would be the perfect time to put the critter into an object pool
             }
         }
@@ -211,7 +211,7 @@ int main(int argc, char* argv[])
 
     for (int i = 0; i < CRITTER_COUNT; i++)
     {
-        critters[i].Destroy();
+        critters[i].Unload();
     }
 
     // De-Initialization
