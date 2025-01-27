@@ -134,12 +134,20 @@ int main(int argc, char* argv[])
                 // this would be the perfect time to put the critter into an object pool
             }
         }
-                
+
+        // ---
+        // TO DO: make this collision loop not have a nested loop if you can
+        // ---
+              
         // check for critter-on-critter collisions
         for (int i = 0; i < CRITTER_COUNT; i++)
         {            
+
+            if (critters[i]->IsDead())
+                continue;
+
             for (int j = 0; j < CRITTER_COUNT; j++){
-                if (i == j || critters[i]->IsDirty()) // note: the other critter (j) could be dirty - that's OK
+                if (i == j || critters[i]->IsDirty() || critters[j]->IsDead()) // note: the other critter (j) could be dirty - that's OK
                     continue;
                 // check every critter against every other critter
                 float dist = Vector2Distance(critters[i]->GetPosition(), critters[j]->GetPosition());
