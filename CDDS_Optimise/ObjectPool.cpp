@@ -15,22 +15,28 @@ ObjectPool::~ObjectPool()
 void ObjectPool::Allocate(Vector2 position, Vector2 velocity, float radius, const char* texture)
 {
 	if (m_inactiveCount <= 0)
+	{
 		objects.PushFront(Critter());
-	else
-		objects.PushFront(objects.PopBack());
-
+		objects.First().Init(position, velocity, radius, texture);
+		m_activeCount++;
+		return;
+	}
+	
+	objects.PushFront(objects.PopBack());
 	objects.First().Init(position, velocity, radius, texture);
 	m_activeCount++;
-	m_inactiveCount--;
+	if (m_inactiveCount > 0)
+		m_inactiveCount--;
 }
 
-void ObjectPool::Deallocate(Critter& critter)
+void ObjectPool::Deallocate(Critter&& critter)
 {
 	if (m_activeCount <= 0)
 		return;
 
-	objects.PushBack(critter);
+	critter.Unload();
 	objects.Remove(critter);
+	objects.PushBack(critter);
 	m_activeCount--;
 	m_inactiveCount++;
 }

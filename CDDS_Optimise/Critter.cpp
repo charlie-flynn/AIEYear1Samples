@@ -12,7 +12,6 @@ Critter::Critter()
 
 Critter::~Critter()
 {
-	UnloadTexture(m_texture);
 	m_isLoaded = false;
 }
 
@@ -30,7 +29,7 @@ const bool Critter::operator!=(const Critter& other) const
 	return !(*this == other);
 }
 
-void Critter::Init(Vector2 position, Vector2 velocity, float radius, const char* texture)
+Critter& Critter::Init(Vector2 position, Vector2 velocity, float radius, const char* texture)
 {
 	m_position = position;
 	m_velocity = velocity;
@@ -41,6 +40,8 @@ void Critter::Init(Vector2 position, Vector2 velocity, float radius, const char*
 
 	m_isInitialized = true;
 	m_isLoaded = true;
+
+	return *this;
 }
 
 void Critter::Unload()
@@ -56,9 +57,6 @@ void Critter::Destroy()
 
 void Critter::Update(float dt)
 {
-	if (m_isLoaded == false)
-		return;
-
 	m_position.x += m_velocity.x * dt;
 	m_position.y += m_velocity.y * dt;
 
@@ -68,8 +66,5 @@ void Critter::Update(float dt)
 
 void Critter::Draw()
 {
-	if (m_isLoaded == false)
-		return;
-
 	DrawTexture(m_texture, m_position.x - m_radius, m_position.y - m_radius, WHITE);
 }
