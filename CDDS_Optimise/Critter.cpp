@@ -16,6 +16,20 @@ Critter::~Critter()
 	m_isLoaded = false;
 }
 
+const bool Critter::operator==(const Critter& other) const
+{
+	return m_position.x == other.m_position.x &&
+		m_position.y == other.m_position.y &&
+		m_velocity.x == other.m_velocity.x &&
+		m_velocity.y == other.m_velocity.y &&
+		m_radius == other.m_radius;
+}
+
+const bool Critter::operator!=(const Critter& other) const
+{
+	return !(*this == other);
+}
+
 void Critter::Init(Vector2 position, Vector2 velocity, float radius, const char* texture)
 {
 	m_position = position;

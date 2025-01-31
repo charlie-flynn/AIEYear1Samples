@@ -19,6 +19,8 @@ protected:
 public:
 	Critter();
 	~Critter();
+	const bool operator==(const Critter& other) const;
+	const bool operator!=(const Critter& other) const;
 
 	void Init(Vector2 position, Vector2 velocity, float radius, const char* texture);
 	void Unload();
