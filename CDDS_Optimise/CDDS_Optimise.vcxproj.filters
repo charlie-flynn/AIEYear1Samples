@@ -21,7 +21,7 @@
     <ClCompile Include="Critter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ObjectPool.cpp">
+    <ClCompile Include="CritterPool.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -29,7 +29,7 @@
     <ClInclude Include="Critter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ObjectPool.h">
+    <ClInclude Include="CritterPool.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Iterator.h">

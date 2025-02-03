@@ -24,8 +24,9 @@
 #include <random>
 #include <time.h>
 #include "Critter.h"
-#include "ObjectPool.h"
+#include "CritterPool.h"
 #include "List.h"
+#include <string>
 
 int main(int argc, char* argv[])
 {
@@ -42,7 +43,8 @@ int main(int argc, char* argv[])
     srand(time(NULL));
 
 
-    ObjectPool critters = ObjectPool();
+    CritterPool critters = CritterPool();
+
 
     // create some critters
     const int CRITTER_COUNT = 50;
@@ -80,6 +82,10 @@ int main(int argc, char* argv[])
         //----------------------------------------------------------------------------------
         // TODO: Update your variables here
         //----------------------------------------------------------------------------------
+
+        DrawText(std::to_string(critters.GetActiveCount()).c_str(), 10, 40, 30, GREEN);
+        DrawText(std::to_string(critters.GetInactiveCount()).c_str(), 10, 80, 30, RED);
+        DrawText(std::to_string(critters.objects.GetLength()).c_str(), 10, 120, 30, BLACK);
 
         float delta = GetFrameTime();
 
