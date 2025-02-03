@@ -25,6 +25,7 @@
 #include <time.h>
 #include "Critter.h"
 #include "ObjectPool.h"
+#include "List.h"
 
 int main(int argc, char* argv[])
 {
@@ -40,17 +41,19 @@ int main(int argc, char* argv[])
 
     srand(time(NULL));
 
-    
+
     ObjectPool critters = ObjectPool();
+    List<Critter*> toBeRemoved = List<Critter*>();
 
     // create some critters
     const int CRITTER_COUNT = 50;
     const int MAX_VELOCITY = 80;
 
+    Iterator<Critter> iter = critters.objects.begin();
     for (int i = 0; i < CRITTER_COUNT; i++)
     {
         // create a random direction vector for the velocity
-        Vector2 velocity = { -100+(rand()%200), -100+(rand()%200) };
+        Vector2 velocity = { -100 + (rand() % 200), -100 + (rand() % 200) };
         // normalize and scale by a random speed
         velocity = Vector2Scale(Vector2Normalize(velocity), MAX_VELOCITY);
 
@@ -58,7 +61,9 @@ int main(int argc, char* argv[])
         critters.Allocate({ (float)(5 + rand() % (screenWidth - 10)), (float)(5 + (rand() % screenHeight - 10)) },
             velocity,
             12, "res/10.png");
+
     }
+
 
 
     Critter* destroyer = new Critter();
@@ -102,6 +107,11 @@ int main(int argc, char* argv[])
         // update the critters
         // (dirty flags will be cleared during update)
         {
+            if (toBeRemoved.GetLength() > 0)
+            {
+                critters.Deallocate(*toBeRemoved.First());
+            }
+
             Iterator<Critter> iter = critters.objects.begin();
             for (int i = 0; i < critters.GetActiveCount(); i++)
             {
@@ -130,7 +140,10 @@ int main(int argc, char* argv[])
                 float dist = Vector2Distance((*iter).GetPosition(), destroyer->GetPosition());
                 if (dist < (*iter).GetRadius() + destroyer->GetRadius())
                 {
-                    critters.Deallocate(*iter);
+                    int a = 23;
+                    int* b = a;
+                    Critter* pointer = *iter;
+                    toBeRemoved.PushBack((*iter));
                     // this would be the perfect time to put the critter into an object pool
                 }
                 iter++;

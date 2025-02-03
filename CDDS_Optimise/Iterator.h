@@ -10,7 +10,7 @@ public:
 	Iterator<T>();
 	Iterator<T>(Node<T>* current);
 
-	T operator*() const;
+	T& operator*() const;
 	Iterator<T> operator++();
 	Iterator<T> operator++(int);	
 	Iterator<T> operator--();
@@ -31,7 +31,7 @@ inline Iterator<T>::Iterator(Node<T>* current) : m_current(current)
 }
 
 template<typename T>
-inline T Iterator<T>::operator*() const
+inline T& Iterator<T>::operator*() const
 {
 	return m_current->value;
 }

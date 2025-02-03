@@ -13,7 +13,7 @@ public:
 	ObjectPool();
 	~ObjectPool();
 	void Allocate(Vector2 position, Vector2 velocity, float radius, const char* texture);
-	void Deallocate(Critter&& critter);
-	int GetActiveCount() { return m_activeCount; }
+	void Deallocate(Critter& critter);
+	const int GetActiveCount() const { return m_activeCount; }
 	int GetInactiveCount() { return m_inactiveCount; }
 };

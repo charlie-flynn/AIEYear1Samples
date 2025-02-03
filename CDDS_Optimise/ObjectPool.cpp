@@ -25,18 +25,19 @@ void ObjectPool::Allocate(Vector2 position, Vector2 velocity, float radius, cons
 	objects.PushFront(objects.PopBack());
 	objects.First().Init(position, velocity, radius, texture);
 	m_activeCount++;
-	if (m_inactiveCount > 0)
-		m_inactiveCount--;
+	m_inactiveCount--;
 }
 
-void ObjectPool::Deallocate(Critter&& critter)
+void ObjectPool::Deallocate(Critter& critter)
 {
 	if (m_activeCount <= 0)
 		return;
 
+	Critter alsoCritter = critter;
+
 	critter.Unload();
 	objects.Remove(critter);
-	objects.PushBack(critter);
+	objects.PushBack(alsoCritter);
 	m_activeCount--;
 	m_inactiveCount++;
 }
