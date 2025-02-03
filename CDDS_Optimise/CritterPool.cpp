@@ -12,7 +12,7 @@ CritterPool::~CritterPool()
 	objects.Destroy();
 }
 
-void CritterPool::Allocate(Vector2 position, Vector2 velocity, float radius, const char* texture)
+void CritterPool::Load(Vector2 position, Vector2 velocity, float radius, const char* texture)
 {
 	if (m_inactiveCount <= 0)
 	{
@@ -22,15 +22,14 @@ void CritterPool::Allocate(Vector2 position, Vector2 velocity, float radius, con
 	}
 	else
 	{
-		objects.PushFront(objects.Last());
-		objects.PopBack();
+		objects.PushFront(objects.PopBack());
 		objects.First().Init(position, velocity, radius, texture);
 		m_activeCount++;
 		m_inactiveCount--;
 	}
 }
 
-bool CritterPool::Deallocate(Critter& critter)
+bool CritterPool::Unload(Critter& critter)
 {
 	if (m_activeCount <= 0)
 		return false;

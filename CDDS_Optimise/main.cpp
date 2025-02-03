@@ -59,7 +59,7 @@ int main(int argc, char* argv[])
         velocity = Vector2Scale(Vector2Normalize(velocity), MAX_VELOCITY);
 
         // create a critter in a random location
-        critters.Allocate({ (float)(5 + rand() % (screenWidth - 10)), (float)(5 + (rand() % screenHeight - 10)) },
+        critters.Load({ (float)(5 + rand() % (screenWidth - 10)), (float)(5 + (rand() % screenHeight - 10)) },
             velocity,
             12, "res/10.png");
 
@@ -142,7 +142,7 @@ int main(int argc, char* argv[])
                 {
                     Critter destroyed = (*iter);
                     iter++;
-                    critters.Deallocate(destroyed);
+                    critters.Unload(destroyed);
                     // this would be the perfect time to put the critter into an object pool
                 }
                 else
@@ -215,7 +215,7 @@ int main(int argc, char* argv[])
             Vector2 pos = destroyer->GetPosition();
             pos = Vector2Add(pos, Vector2Scale(normal, -50));
             // its pretty ineficient to keep reloading textures. ...if only there was something else we could do
-            critters.Allocate(pos, Vector2Scale(normal, -MAX_VELOCITY), 12, "res/10.png");
+            critters.Load(pos, Vector2Scale(normal, -MAX_VELOCITY), 12, "res/10.png");
 
             nextSpawnPos = destroyer->GetPosition();
             }

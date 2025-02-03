@@ -12,8 +12,8 @@ private:
 public:
 	CritterPool();
 	~CritterPool();
-	void Allocate(Vector2 position, Vector2 velocity, float radius, const char* texture);
-	bool Deallocate(Critter& critter);
+	void Load(Vector2 position, Vector2 velocity, float radius, const char* texture);
+	bool Unload(Critter& critter);
 	const int GetActiveCount() const { return m_activeCount; }
 	int GetInactiveCount() { return m_inactiveCount; }
 };
