@@ -23,7 +23,7 @@ public:
 	const bool operator==(const Critter& other) const;
 	const bool operator!=(const Critter& other) const;
 
-	Critter& Init(Vector2 position, Vector2 velocity, float radius, const char* texture);
+	void Init(Vector2 position, Vector2 velocity, float radius, const char* texture);
 	void Unload();
 	void Destroy();
 	void Update(float dt);

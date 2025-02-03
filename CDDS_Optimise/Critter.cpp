@@ -30,7 +30,7 @@ const bool Critter::operator!=(const Critter& other) const
 	return !(*this == other);
 }
 
-Critter& Critter::Init(Vector2 position, Vector2 velocity, float radius, const char* texture)
+void Critter::Init(Vector2 position, Vector2 velocity, float radius, const char* texture)
 {
 	m_position = position;
 	m_velocity = velocity;
@@ -42,8 +42,6 @@ Critter& Critter::Init(Vector2 position, Vector2 velocity, float radius, const c
 
 	m_isInitialized = true;
 	m_isLoaded = true;
-
-	return *this;
 }
 
 void Critter::Unload()
