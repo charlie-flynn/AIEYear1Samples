@@ -204,9 +204,11 @@ int main(int argc, char* argv[])
         }
 
         timer -= delta;
-        if (timer <= 0 && critters.GetInactiveCount() > 0)
+        if (timer <= 0)
         {
             timer = 1;
+            if (critters.GetInactiveCount() > 0)
+            {
             Vector2 normal = Vector2Normalize(destroyer->GetVelocity());
 
             // get a position behind the destroyer, and far enough away that the critter won't bump into it again
@@ -216,6 +218,7 @@ int main(int argc, char* argv[])
             critters.Allocate(pos, Vector2Scale(normal, -MAX_VELOCITY), 12, "res/10.png");
 
             nextSpawnPos = destroyer->GetPosition();
+            }
         }
 
         // Draw

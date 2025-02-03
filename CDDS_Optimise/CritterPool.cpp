@@ -22,23 +22,28 @@ void CritterPool::Allocate(Vector2 position, Vector2 velocity, float radius, con
 	}
 	else
 	{
-		objects.PushFront(objects.PopBack());
+		objects.PushFront(objects.Last());
+		objects.PopBack();
 		objects.First().Init(position, velocity, radius, texture);
 		m_activeCount++;
 		m_inactiveCount--;
 	}
 }
 
-void CritterPool::Deallocate(Critter& critter)
+bool CritterPool::Deallocate(Critter& critter)
 {
 	if (m_activeCount <= 0)
-		return;
+		return false;
 
 	Critter pushBackCritter = critter;
+	bool isRemoved;
 
-	critter.Unload();
-	objects.Remove(critter);
-	objects.PushBack(pushBackCritter);
-	m_activeCount--;
-	m_inactiveCount++;
+	if (isRemoved = objects.Remove(critter))
+	{
+		objects.PushBack(pushBackCritter);
+		m_activeCount--;
+		m_inactiveCount++;
+	}
+
+	return isRemoved;
 }
