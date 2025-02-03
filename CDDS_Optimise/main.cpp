@@ -164,7 +164,8 @@ int main(int argc, char* argv[])
                 }
 
                 Iterator<Critter> iterB = critters.objects.begin();
-                for (int j = 0; j < critters.GetActiveCount(); j++) {
+                for (int j = 0; j < critters.GetActiveCount(); j++)
+                {
                     if (i == j || (*iterA).IsDirty() || (*iterB).IsDead()) // note: the other critter (j) could be dirty - that's OK
                     {
                         iterB++;
@@ -185,14 +186,15 @@ int main(int argc, char* argv[])
 
                         // we still want to check for collisions in the case where 1 critter is dirty - so we need a check 
                         // to make sure the other critter is clean before we do the collision response
-                        if (!(*iterB).IsDirty()) {
+                        if (!(*iterB).IsDirty())
+                        {
                             (*iterB).SetVelocity(Vector2Scale(normal, MAX_VELOCITY));
                             (*iterB).SetDirty();
                         }
-                        iterB++;
-                        break;
                     }
+                    iterB++;
                 }
+
                 iterA++;
             }
 
