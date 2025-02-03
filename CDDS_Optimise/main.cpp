@@ -43,7 +43,6 @@ int main(int argc, char* argv[])
 
 
     ObjectPool critters = ObjectPool();
-    List<Critter*> toBeRemoved = List<Critter*>();
 
     // create some critters
     const int CRITTER_COUNT = 50;
@@ -107,11 +106,6 @@ int main(int argc, char* argv[])
         // update the critters
         // (dirty flags will be cleared during update)
         {
-            if (toBeRemoved.GetLength() > 0)
-            {
-                critters.Deallocate(*toBeRemoved.First());
-            }
-
             Iterator<Critter> iter = critters.objects.begin();
             for (int i = 0; i < critters.GetActiveCount(); i++)
             {
@@ -140,13 +134,15 @@ int main(int argc, char* argv[])
                 float dist = Vector2Distance((*iter).GetPosition(), destroyer->GetPosition());
                 if (dist < (*iter).GetRadius() + destroyer->GetRadius())
                 {
-                    int a = 23;
-                    int* b = a;
-                    Critter* pointer = *iter;
-                    toBeRemoved.PushBack((*iter));
+                    Critter destroyed = (*iter);
+                    iter++;
+                    critters.Deallocate(destroyed);
                     // this would be the perfect time to put the critter into an object pool
                 }
-                iter++;
+                else
+                {
+                    iter++;
+                }
             }
         }
 
