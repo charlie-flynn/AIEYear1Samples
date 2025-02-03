@@ -204,15 +204,15 @@ int main(int argc, char* argv[])
             timer = 1;
             if (critters.GetInactiveCount() > 0)
             {
-            Vector2 normal = Vector2Normalize(destroyer.GetVelocity());
+                Vector2 normal = Vector2Normalize(destroyer.GetVelocity());
 
-            // get a position behind the destroyer, and far enough away that the critter won't bump into it again
-            Vector2 pos = destroyer.GetPosition();
-            pos = Vector2Add(pos, Vector2Scale(normal, -50));
-            // its pretty ineficient to keep reloading textures. ...if only there was something else we could do
-            critters.Load(pos, Vector2Scale(normal, -MAX_VELOCITY), 12, "res/10.png");
+                // get a position behind the destroyer, and far enough away that the critter won't bump into it again
+                Vector2 pos = destroyer.GetPosition();
+                pos = Vector2Add(pos, Vector2Scale(normal, -50));
+                // its pretty ineficient to keep reloading textures. ...if only there was something else we could do
+                critters.Load(pos, Vector2Scale(normal, -MAX_VELOCITY), 12, "res/10.png");
 
-            nextSpawnPos = destroyer.GetPosition();
+                nextSpawnPos = destroyer.GetPosition();
             }
         }
 

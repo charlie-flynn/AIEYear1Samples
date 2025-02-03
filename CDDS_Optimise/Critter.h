@@ -15,7 +15,6 @@ protected:
 	bool m_isLoaded;
 	bool m_isDirty;		// indicates if we've already processed a collision response for this critter
 	bool m_isInitialized;
-	bool m_toBeDestroyed;
 	
 public:
 	Critter();
@@ -46,9 +45,6 @@ public:
 	void SetDirty() { m_isDirty = true; }
 
 	bool IsDead() { return m_isLoaded == false; }
-
-	bool GetToBeDestroyed() { return m_toBeDestroyed; }
-	void SetToBeDestroyed(bool value) { m_toBeDestroyed = value; }
 
 };
 
