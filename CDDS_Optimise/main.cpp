@@ -47,7 +47,7 @@ int main(int argc, char* argv[])
 
 
     // create some critters
-    const int CRITTER_COUNT = 15;
+    const int CRITTER_COUNT = 50;
     const int MAX_VELOCITY = 80;
 
     Iterator<Critter> iter = critters.objects.begin();
@@ -157,16 +157,10 @@ int main(int argc, char* argv[])
             for (int i = 0; i < critters.GetActiveCount(); i++)
             {
 
-                if ((*iterA).IsDead())
-                {
-                    iterA++;
-                    continue;
-                }
-
                 Iterator<Critter> iterB = critters.objects.begin();
                 for (int j = 0; j < critters.GetActiveCount(); j++)
                 {
-                    if (i == j || (*iterA).IsDirty() || (*iterB).IsDead()) // note: the other critter (j) could be dirty - that's OK
+                    if (i == j || (*iterA).IsDirty()) // note: the other critter (j) could be dirty - that's OK
                     {
                         iterB++;
                         continue;

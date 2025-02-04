@@ -64,7 +64,4 @@ void Critter::Update(float dt)
 void Critter::Draw()
 {
 	DrawTexture(m_texture, m_position.x - m_radius, m_position.y - m_radius, WHITE);
-
-	if (m_isDirty)
-		DrawRectangle(m_position.x - m_radius, m_position.y - m_radius, 40, 40, RED);
 }
