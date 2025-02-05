@@ -84,6 +84,12 @@ int main(int argc, char* argv[])
 
         float delta = GetFrameTime();
 
+        if (IsKeyPressed(KEY_EQUAL))
+            critters.AddCritter();
+
+        if (IsKeyPressed(KEY_MINUS))
+            critters.RemoveCritter();
+
         // update the destroyer
         destroyer.Update(delta);
         // check each critter against screen bounds
@@ -135,6 +141,7 @@ int main(int argc, char* argv[])
                 float dist = Vector2Distance((*iter).GetPosition(), destroyer.GetPosition());
                 if (dist < (*iter).GetRadius() + destroyer.GetRadius())
                 {
+                    // have to move the iterator so it isn't stuck on nullptr
                     Critter destroyed = (*iter);
                     iter++;
                     critters.Unload(destroyed);

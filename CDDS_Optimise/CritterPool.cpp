@@ -46,3 +46,17 @@ bool CritterPool::Unload(Critter& critter)
 
 	return isRemoved;
 }
+
+void CritterPool::AddCritter()
+{
+	objects.PushFront(Critter());
+	objects.First().Init({ 150, 150 }, { 80, 0 }, 12, "res/10.png");
+	m_activeCount++;
+}
+
+void CritterPool::RemoveCritter()
+{
+	objects.PopFront();
+	if (m_activeCount > 0)
+		m_activeCount--;
+}
