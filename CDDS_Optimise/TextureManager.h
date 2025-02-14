@@ -14,7 +14,7 @@ private:
 	int m_length;
 
 public:
-	TextureManager(int length = 100);
+	TextureManager(int length = 0);
 	~TextureManager();
 
 	void TextureLoad(const char* name);
