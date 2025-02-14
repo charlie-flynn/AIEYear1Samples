@@ -45,6 +45,8 @@ int main(int argc, char* argv[])
 
     CritterPool critters = CritterPool();
 
+    TextureManager textureManager = TextureManager(2);
+
 
     // create some critters
     const int CRITTER_COUNT = 50;

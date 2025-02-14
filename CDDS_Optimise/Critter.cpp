@@ -8,6 +8,7 @@ Critter::Critter()
 	m_radius = 0;
 	m_isLoaded = false;
 	m_isInitialized = false;
+	m_textureID = 0;
 }
 
 Critter::~Critter()
@@ -34,7 +35,7 @@ void Critter::Init(Vector2 position, Vector2 velocity, float radius, const char*
 	m_position = position;
 	m_velocity = velocity;
 	m_radius = radius;
-	m_texture = (char*)texture;
+	m_textureName = (char*)texture;
 	
 	//if (!m_isInitialized)
 	//	m_texture = LoadTexture(texture);

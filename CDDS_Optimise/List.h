@@ -22,8 +22,8 @@ public:
 	bool Insert(const T& value, int index);
 	bool Remove(const T& value);
 	int RemoveAll(const T& value);
-	T First() const;
-	T Last() const;
+	T& First() const;
+	T& Last() const;
 	Iterator<T> begin() const;
 	Iterator<T> end() const;
 	void Destroy();
@@ -279,19 +279,26 @@ inline int List<T>::RemoveAll(const T& value)
 }
 
 template<typename T>
-inline T List<T>::First() const
+inline T& List<T>::First() const
 {
 	if (!m_head)
-		return T();
+	{
+		T placeholder = T();
+		return placeholder;	
+	}
 
 	return m_head->value;
 }
 
 template<typename T>
-inline T List<T>::Last() const
+inline T& List<T>::Last() const
 {
 	if (!m_tail)
-		return T();
+	{
+		T placeholder = T();
+		return placeholder;
+	}
+
 
 	return m_tail->value;
 }

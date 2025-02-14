@@ -3,9 +3,9 @@
 #include "HashTable.h"
 #include "raylib.h"
 
-TextureManager::TextureManager(int length)
+TextureManager::TextureManager(int length) : m_textureNames(HashTable(length))
 {
-	m_textureNames = HashTable(length);
+	//m_textureNames = HashTable(length);
 	m_textures = new Texture2D[length];
 	m_count = 0;
 	m_length = length;

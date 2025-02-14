@@ -9,7 +9,7 @@ private:
 	int m_count;
 	int m_arrayLength;
 public:
-	HashTable(int size = 100);
+	HashTable(int size = 0);
 	HashTable(std::initializer_list<const char*> values);
 	HashTable(char* values[], int length);
 	~HashTable();
