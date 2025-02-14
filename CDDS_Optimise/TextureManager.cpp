@@ -16,6 +16,11 @@ TextureManager::TextureManager(int length) : m_textureNames(HashTable(length))
 	}
 }
 
+TextureManager::~TextureManager()
+{
+	delete[] m_textures;
+}
+
 void TextureManager::TextureLoad(const char* name)
 {
 	if (m_textureNames.Add(name))
