@@ -16,35 +16,21 @@ TextureManager::TextureManager(int length)
 	}
 }
 
-void TextureManager::NotRaylibLoadTexture(const char* texture)
+void TextureManager::TextureLoad(const char* name)
 {
-	if (m_textureNames.Add(texture))
+	if (m_textureNames.Add(name))
 	{
-		if (int index = FindEmptyIndex((char*)texture) >= 0)
-			m_textures[index] = LoadTexture(texture);
+		m_textures[m_count] = LoadTexture(name);
+		m_count++;
 	}
+		
 }
 
 void TextureManager::Draw(Critter* critter)
 {
 	if (m_textureNames.Contains(critter->GetTextureName()))
 	{
-		
+		DrawTexture(m_textures[critter->GetTextureID()], critter->GetX(), critter->GetY(), WHITE);
 	}
 }
 
-// returns -1 if it fails
-int TextureManager::FindEmptyIndex(char* name)
-{
-	int index = m_textureNames.Hash((unsigned char*)name) % m_length;
-
-	for (int i = 0; i < m_length; i++)
-	{
-		if (m_textures[index].width = 0)
-			return index;
-		else
-			index = (index + 1) % m_length;
-	}
-
-	return -1;
-}

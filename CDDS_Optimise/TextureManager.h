@@ -1,8 +1,9 @@
 #pragma once
 #include "HashTable.h"
-#include "Critter.h"
 
 class Texture2D;
+
+class Critter;
 
 class TextureManager
 {
@@ -15,7 +16,6 @@ private:
 public:
 	TextureManager(int length = 100);
 
-	void NotRaylibLoadTexture(const char* texture);
+	void TextureLoad(const char* name);
 	void Draw(Critter* critter);
-	int FindEmptyIndex(char* name);
 };
