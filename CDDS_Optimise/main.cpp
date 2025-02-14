@@ -98,16 +98,16 @@ int main(int argc, char* argv[])
             destroyer.SetX(0);
             destroyer.SetVelocity(Vector2{ -destroyer.GetVelocity().x, destroyer.GetVelocity().y });
         }
-        if (destroyer.GetX() > screenWidth) {
-            destroyer.SetX(screenWidth);
+        if (destroyer.GetX() > screenWidth - destroyer.GetRadius() * 2) {
+            destroyer.SetX(screenWidth - destroyer.GetRadius() * 2);
             destroyer.SetVelocity(Vector2{ -destroyer.GetVelocity().x, destroyer.GetVelocity().y });
         }
         if (destroyer.GetY() < 0) {
             destroyer.SetY(0);
             destroyer.SetVelocity(Vector2{ destroyer.GetVelocity().x, -destroyer.GetVelocity().y });
         }
-        if (destroyer.GetY() > screenHeight) {
-            destroyer.SetY(screenHeight);
+        if (destroyer.GetY() > screenHeight - destroyer.GetRadius() * 2) {
+            destroyer.SetY(screenHeight - destroyer.GetRadius() * 2);
             destroyer.SetVelocity(Vector2{ destroyer.GetVelocity().x, -destroyer.GetVelocity().y });
         }
 
@@ -124,16 +124,16 @@ int main(int argc, char* argv[])
                     (*iter).SetX(0);
                     (*iter).SetVelocity(Vector2{ -(*iter).GetVelocity().x, (*iter).GetVelocity().y });
                 }
-                if ((*iter).GetX() > screenWidth) {
-                    (*iter).SetX(screenWidth);
+                if ((*iter).GetX() > screenWidth - (*iter).GetRadius() * 2) {
+                    (*iter).SetX(screenWidth - (*iter).GetRadius() * 2);
                     (*iter).SetVelocity(Vector2{ -(*iter).GetVelocity().x, (*iter).GetVelocity().y });
                 }
                 if ((*iter).GetY() < 0) {
                     (*iter).SetY(0);
                     (*iter).SetVelocity(Vector2{ (*iter).GetVelocity().x, -(*iter).GetVelocity().y });
                 }
-                if ((*iter).GetY() > screenHeight) {
-                    (*iter).SetY(screenHeight);
+                if ((*iter).GetY() > screenHeight - (*iter).GetRadius() * 2) {
+                    (*iter).SetY(screenHeight - (*iter).GetRadius() * 2);
                     (*iter).SetVelocity(Vector2{ (*iter).GetVelocity().x, -(*iter).GetVelocity().y });
                 }
 
