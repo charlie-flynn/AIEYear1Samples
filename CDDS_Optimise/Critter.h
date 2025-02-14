@@ -44,7 +44,7 @@ public:
 	bool IsDirty() { return m_isDirty; }
 	void SetDirty() { m_isDirty = true; }
 
-	[[deprecated("Replaced by moving the critter to the back of the CritterPool")]]
+	[[deprecated("m_isLoaded was replaced by moving the critter to the back of the CritterPool")]]
 	bool IsDead() { return m_isLoaded == false; }
 
 };

@@ -21,8 +21,9 @@ public:
 	T PopBack();
 	bool Insert(const T& value, int index);
 	bool Remove(const T& value);
-	T& First() const;
-	T& Last() const;
+	int RemoveAll(const T& value);
+	T First() const;
+	T Last() const;
 	Iterator<T> begin() const;
 	Iterator<T> end() const;
 	void Destroy();
@@ -224,25 +225,73 @@ inline bool List<T>::Remove(const T& value)
 }
 
 template<typename T>
-inline T& List<T>::First() const
+inline int List<T>::RemoveAll(const T& value)
+{
+
+	// if no tail, list is empty
+	if (!m_tail)
+		return 0;
+
+	int count = 0;
+
+	// iterate and remove
+	Node<T>* node = m_head;
+
+	while (node && m_tail && node != m_tail->next)
+	{
+		// if the node's value is the value to remove
+		if (node->value == value)
+		{
+			if (node != m_head)
+			{
+				node->previous->next = node->next;
+			}
+			else
+			{
+				PopFront();
+				node = m_head;
+				count++;
+				continue;
+			}
+			// remove node and decrement length
+			if (node != m_tail)
+			{
+				node->next->previous = node->previous;
+				Node<T>* temp = node;
+				node = node->next;
+				delete temp;
+				m_length--;
+				count++;
+			}
+			else
+			{
+				PopBack();
+				node = m_tail;
+				count++;
+			}
+		}
+		else
+		{
+			node = node->next;
+		}
+	}
+	return count;
+}
+
+template<typename T>
+inline T List<T>::First() const
 {
 	if (!m_head)
-	{
-		T placeholder = T();
-		return placeholder;
-	}
+		return T();
 
 	return m_head->value;
 }
 
 template<typename T>
-inline T& List<T>::Last() const
+inline T List<T>::Last() const
 {
 	if (!m_tail)
-	{
-		T placeholder = T();
-		return placeholder;
-	}
+		return T();
 
 	return m_tail->value;
 }
@@ -262,7 +311,7 @@ inline Iterator<T> List<T>::end() const
 	if (!m_tail)
 		return Iterator<T>();
 
-	return Iterator<T>(m_tail->next);
+	return Iterator<T>(m_tail);
 }
 
 template<typename T>
