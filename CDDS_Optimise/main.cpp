@@ -98,16 +98,16 @@ int main(int argc, char* argv[])
             destroyer.SetX(0);
             destroyer.SetVelocity(Vector2{ -destroyer.GetVelocity().x, destroyer.GetVelocity().y });
         }
-        if (destroyer.GetX() > screenWidth - destroyer.GetRadius() * 2) {
-            destroyer.SetX(screenWidth - destroyer.GetRadius() * 2);
+        if (destroyer.GetX() > screenWidth) {
+            destroyer.SetX(screenWidth);
             destroyer.SetVelocity(Vector2{ -destroyer.GetVelocity().x, destroyer.GetVelocity().y });
         }
         if (destroyer.GetY() < 0) {
             destroyer.SetY(0);
             destroyer.SetVelocity(Vector2{ destroyer.GetVelocity().x, -destroyer.GetVelocity().y });
         }
-        if (destroyer.GetY() > screenHeight - destroyer.GetRadius() * 2) {
-            destroyer.SetY(screenHeight - destroyer.GetRadius() * 2);
+        if (destroyer.GetY() > screenHeight) {
+            destroyer.SetY(screenHeight);
             destroyer.SetVelocity(Vector2{ destroyer.GetVelocity().x, -destroyer.GetVelocity().y });
         }
 
@@ -124,16 +124,16 @@ int main(int argc, char* argv[])
                     (*iter).SetX(0);
                     (*iter).SetVelocity(Vector2{ -(*iter).GetVelocity().x, (*iter).GetVelocity().y });
                 }
-                if ((*iter).GetX() > screenWidth - (*iter).GetRadius() * 2) {
-                    (*iter).SetX(screenWidth - (*iter).GetRadius() * 2);
+                if ((*iter).GetX() > screenWidth) {
+                    (*iter).SetX(screenWidth);
                     (*iter).SetVelocity(Vector2{ -(*iter).GetVelocity().x, (*iter).GetVelocity().y });
                 }
                 if ((*iter).GetY() < 0) {
                     (*iter).SetY(0);
                     (*iter).SetVelocity(Vector2{ (*iter).GetVelocity().x, -(*iter).GetVelocity().y });
                 }
-                if ((*iter).GetY() > screenHeight - (*iter).GetRadius() * 2) {
-                    (*iter).SetY(screenHeight - (*iter).GetRadius() * 2);
+                if ((*iter).GetY() > screenHeight) {
+                    (*iter).SetY(screenHeight);
                     (*iter).SetVelocity(Vector2{ (*iter).GetVelocity().x, -(*iter).GetVelocity().y });
                 }
 
@@ -245,9 +245,11 @@ int main(int argc, char* argv[])
         // destroyer, it's because the origin is at the top-left. ...you could fix that!)
         textureManager.Draw(&destroyer);
 
+        /*
         DrawText(std::to_string(critters.GetActiveCount()).c_str(), 10, 40, 30, GREEN);
         DrawText(std::to_string(critters.GetInactiveCount()).c_str(), 10, 80, 30, RED);
         DrawText(std::to_string(critters.objects.GetLength()).c_str(), 10, 120, 30, BLACK);
+        */
 
         DrawFPS(10, 10);
         //DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);

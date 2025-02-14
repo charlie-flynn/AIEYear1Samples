@@ -30,7 +30,7 @@ void TextureManager::Draw(Critter* critter)
 {
 	if (m_textureNames.Contains(critter->GetTextureName()))
 	{
-		DrawTexture(m_textures[critter->GetTextureID()], critter->GetX(), critter->GetY(), WHITE);
+		DrawTexture(m_textures[critter->GetTextureID()], critter->GetX() - critter->GetRadius(), critter->GetY() - critter->GetRadius(), WHITE);
 	}
 }
 
