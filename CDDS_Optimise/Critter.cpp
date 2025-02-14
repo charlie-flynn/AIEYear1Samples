@@ -34,9 +34,10 @@ void Critter::Init(Vector2 position, Vector2 velocity, float radius, const char*
 	m_position = position;
 	m_velocity = velocity;
 	m_radius = radius;
+	m_texture = (char*)texture;
 	
-	if (!m_isInitialized)
-		m_texture = LoadTexture(texture);
+	//if (!m_isInitialized)
+	//	m_texture = LoadTexture(texture);
 
 	m_isInitialized = true;
 }
@@ -49,7 +50,7 @@ void Critter::Unload()
 
 void Critter::Destroy()
 {
-	UnloadTexture(m_texture);
+	//UnloadTexture(m_texture);
 }
 
 void Critter::Update(float dt)
@@ -63,5 +64,5 @@ void Critter::Update(float dt)
 
 void Critter::Draw()
 {
-	DrawTexture(m_texture, m_position.x - m_radius, m_position.y - m_radius, WHITE);
+	//DrawTexture(m_texture, m_position.x - m_radius, m_position.y - m_radius, WHITE);
 }

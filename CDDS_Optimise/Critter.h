@@ -10,7 +10,8 @@ protected:
 	Vector2 m_velocity;
 	float m_radius;
 
-	Texture2D m_texture;
+	char* m_textureName;
+	int m_textureID;
 
 	bool m_isLoaded;
 	bool m_isDirty;		// indicates if we've already processed a collision response for this critter
@@ -26,6 +27,8 @@ public:
 	void Unload();
 	void Destroy();
 	void Update(float dt);
+
+	[[deprecated("TextureManager now handles drawing textures to the screen")]]
 	void Draw();
 
 	float GetX() { return m_position.x; }
@@ -40,6 +43,11 @@ public:
 	void SetVelocity(Vector2 velocity) { m_velocity = velocity; }
 
 	float GetRadius() { return m_radius; }
+
+	char* GetTextureName() { return m_textureName; }
+
+	int GetTextureID() { return m_textureID; }
+	void SetTextureID(int value) { m_textureID = value; }
 
 	bool IsDirty() { return m_isDirty; }
 	void SetDirty() { m_isDirty = true; }

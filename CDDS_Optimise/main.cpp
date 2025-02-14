@@ -172,7 +172,7 @@ int main(int argc, char* argv[])
                 Iterator<Critter> iterB = critters.objects.begin();
                 for (int j = 0; j < critters.GetActiveCount(); j++)
                 {
-                    if (i <= j) // note: the other critter (j) could be dirty - that's OK
+                    if (j <= i) // note: the other critter (j) could be dirty - that's OK
                     {
                         iterB++;
                         continue;
