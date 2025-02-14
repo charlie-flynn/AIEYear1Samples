@@ -27,6 +27,7 @@
 #include "CritterPool.h"
 #include "List.h"
 #include <string>
+#include "TextureManager.h"
 
 int main(int argc, char* argv[])
 {
@@ -72,6 +73,10 @@ int main(int argc, char* argv[])
     Vector2 velocity = { -100 + (rand() % 200), -100 + (rand() % 200) };
     velocity = Vector2Scale(Vector2Normalize(velocity), MAX_VELOCITY);
     destroyer.Init(Vector2{ (float)(screenWidth >> 1), (float)(screenHeight >> 1) }, velocity, 20, "res/9.png");
+    destroyer.SetTextureID(1);
+
+    textureManager.TextureLoad(critters.objects.First().GetTextureName());
+    textureManager.TextureLoad(destroyer.GetTextureName());
 
     float timer = 1;
     Vector2 nextSpawnPos = destroyer.GetPosition();
@@ -85,12 +90,6 @@ int main(int argc, char* argv[])
         //----------------------------------------------------------------------------------
 
         float delta = GetFrameTime();
-
-        if (IsKeyPressed(KEY_EQUAL))
-            critters.AddCritter();
-
-        if (IsKeyPressed(KEY_MINUS))
-            critters.RemoveCritter();
 
         // update the destroyer
         destroyer.Update(delta);
@@ -237,14 +236,14 @@ int main(int argc, char* argv[])
             Iterator<Critter> iter = critters.objects.begin();
             for (int i = 0; i < critters.GetActiveCount(); i++)
             {
-                (*iter).Draw();
+                textureManager.Draw(&(*iter));
                 iter++;
             }
         }
         // draw the destroyer
         // (if you're wondering why it looks a little odd when sometimes critters are destroyed when they're not quite touching the 
         // destroyer, it's because the origin is at the top-left. ...you could fix that!)
-        destroyer.Draw();
+        textureManager.Draw(&destroyer);
 
         DrawText(std::to_string(critters.GetActiveCount()).c_str(), 10, 40, 30, GREEN);
         DrawText(std::to_string(critters.GetInactiveCount()).c_str(), 10, 80, 30, RED);
