@@ -99,6 +99,11 @@ bool HashTable::Add(const char* value)
         {
             m_values[index] = HashPair(key, (unsigned char*)value, hashed);
             m_count++;
+
+            // if count is greater than or equal to two-thirds the array length, double the array length
+            if (m_count >= m_arrayLength - (m_arrayLength / 3))
+                Resize(m_arrayLength * 2);
+
             return true;
         }
         else
@@ -141,12 +146,11 @@ bool HashTable::Remove(const char* value)
 }
 
 // Resizes the hash table to the given size.
-// WARNING: If the size is smaller than the current count, you will lose data and there is no good way to know what data you lost!
-void HashTable::Resize(int size)
+bool HashTable::Resize(int size)
 {
     // guard clause
-    if (size == m_arrayLength || size <= 0)
-        return;
+    if (size == m_arrayLength || size <= 0 || size < m_count)
+        return false;
 
     int copiedCount = 0;
 
@@ -175,15 +179,6 @@ void HashTable::Resize(int size)
                 {
                     j = (j + 1) % size;
                 }
-            }
-
-            copiedCount++;
-
-            // check if the amount copied is equal to the size of the array, and if so, end the loop early
-            if (copiedCount >= size)
-            {
-                m_count = copiedCount;
-                break;
             }
         }
     }

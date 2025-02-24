@@ -25,7 +25,8 @@ void TextureManager::TextureLoad(const char* name)
 {
 	if (m_textureNames.Add(name))
 	{
-		m_textures[m_count] = LoadTexture(name);
+		m_length = m_textureNames.GetArrayLength();
+		m_textures[m_textureNames.Hash((unsigned char*)name) % m_length] = LoadTexture(name);
 		m_count++;
 	}
 		

@@ -16,7 +16,7 @@ public:
 	unsigned char*& operator[](const char* key);
 	bool Add(const char* value);
 	bool Remove(const char* value);
-	void Resize(int size);
+	bool Resize(int size);
 	bool Contains(char* value);
 	int GetCount() { return m_count; };
 	int GetArrayLength() { return m_arrayLength; };
