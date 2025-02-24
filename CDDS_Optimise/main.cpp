@@ -46,12 +46,15 @@ int main(int argc, char* argv[])
 
     CritterPool critters = CritterPool();
 
-    TextureManager textureManager = TextureManager(2);
+    TextureManager textureManager = TextureManager(10);
 
 
     // create some critters
     const int CRITTER_COUNT = 50;
     const int MAX_VELOCITY = 80;
+
+    textureManager.TextureLoad("res/9.png");
+    textureManager.TextureLoad("res/10.png");
 
     Iterator<Critter> iter = critters.objects.begin();
     for (int i = 0; i < CRITTER_COUNT; i++)
@@ -64,20 +67,26 @@ int main(int argc, char* argv[])
         // create a critter in a random location
         critters.Load({ (float)(5 + rand() % (screenWidth - 10)), (float)(5 + (rand() % screenHeight - 10)) },
             velocity,
-            12, "res/10.png");
+            12);
+
+        if (i != 0)
+            iter--;
+        else
+            iter = critters.objects.begin();
+
+
+        (*iter).SetTexture(textureManager.GetTexture("res/10.png"));
+
+
     }
-
-
 
     Critter destroyer = Critter();
     Vector2 velocity = { -100 + (rand() % 200), -100 + (rand() % 200) };
     velocity = Vector2Scale(Vector2Normalize(velocity), MAX_VELOCITY);
-    destroyer.Init(Vector2{ (float)(screenWidth >> 1), (float)(screenHeight >> 1) }, velocity, 20, "res/9.png");
-    destroyer.SetTextureID(1);
+    destroyer.Init(Vector2{ (float)(screenWidth >> 1), (float)(screenHeight >> 1) }, velocity, 20);
 
-    textureManager.TextureLoad(critters.objects.First().GetTextureName());
-    textureManager.TextureLoad(destroyer.GetTextureName());
-
+    destroyer.SetTexture(textureManager.GetTexture("res/9.png"));
+        
     float timer = 1;
     Vector2 nextSpawnPos = destroyer.GetPosition();
 
@@ -219,7 +228,7 @@ int main(int argc, char* argv[])
                 Vector2 pos = destroyer.GetPosition();
                 pos = Vector2Add(pos, Vector2Scale(normal, -50));
                 // its pretty ineficient to keep reloading textures. ...if only there was something else we could do
-                critters.Load(pos, Vector2Scale(normal, -MAX_VELOCITY), 12, "res/10.png");
+                critters.Load(pos, Vector2Scale(normal, -MAX_VELOCITY), 12);
 
                 nextSpawnPos = destroyer.GetPosition();
             }
@@ -236,14 +245,14 @@ int main(int argc, char* argv[])
             Iterator<Critter> iter = critters.objects.begin();
             for (int i = 0; i < critters.GetActiveCount(); i++)
             {
-                textureManager.Draw(&(*iter));
+                (*iter).Draw();
                 iter++;
             }
         }
         // draw the destroyer
         // (if you're wondering why it looks a little odd when sometimes critters are destroyed when they're not quite touching the 
         // destroyer, it's because the origin is at the top-left. ...you could fix that!)
-        textureManager.Draw(&destroyer);
+        destroyer.Draw();
 
         /*
         DrawText(std::to_string(critters.GetActiveCount()).c_str(), 10, 40, 30, GREEN);

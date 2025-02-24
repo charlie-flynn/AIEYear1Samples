@@ -12,7 +12,7 @@ private:
 public:
 	CritterPool();
 	~CritterPool();
-	void Load(Vector2 position, Vector2 velocity, float radius, const char* texture);
+	void Load(Vector2 position, Vector2 velocity, float radius);
 	bool Unload(Critter& critter);
 	void AddCritter();
 	void RemoveCritter();

@@ -32,11 +32,11 @@ void TextureManager::TextureLoad(const char* name)
 		
 }
 
-void TextureManager::Draw(Critter* critter)
+Texture2D* TextureManager::GetTexture(const char* name)
 {
-	if (m_textureNames.Contains(critter->GetTextureName()))
+	if (m_textureNames.Contains((char*)name))
 	{
-		DrawTexture(m_textures[critter->GetTextureID()], critter->GetX() - critter->GetRadius(), critter->GetY() - critter->GetRadius(), WHITE);
+		return &m_textures[m_textureNames.Hash((unsigned char*)name) % m_length];
 	}
 }
 

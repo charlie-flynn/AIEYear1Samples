@@ -1,6 +1,5 @@
 #include "Critter.h"
 
-
 Critter::Critter()
 {
 	m_position = Vector2{ 0, 0 };
@@ -8,7 +7,6 @@ Critter::Critter()
 	m_radius = 0;
 	m_isLoaded = false;
 	m_isInitialized = false;
-	m_textureID = 0;
 }
 
 Critter::~Critter()
@@ -30,12 +28,11 @@ const bool Critter::operator!=(const Critter& other) const
 	return !(*this == other);
 }
 
-void Critter::Init(Vector2 position, Vector2 velocity, float radius, const char* texture)
+void Critter::Init(Vector2 position, Vector2 velocity, float radius)
 {
 	m_position = position;
 	m_velocity = velocity;
 	m_radius = radius;
-	m_textureName = (char*)texture;
 	
 	//if (!m_isInitialized)
 	//	m_texture = LoadTexture(texture);
@@ -65,5 +62,5 @@ void Critter::Update(float dt)
 
 void Critter::Draw()
 {
-	//DrawTexture(m_texture, m_position.x - m_radius, m_position.y - m_radius, WHITE);
+	DrawTexture(*m_texture, m_position.x - m_radius, m_position.y - m_radius, WHITE);
 }

@@ -18,5 +18,5 @@ public:
 	~TextureManager();
 
 	void TextureLoad(const char* name);
-	void Draw(Critter* critter);
+	Texture2D* GetTexture(const char* name);
 };
